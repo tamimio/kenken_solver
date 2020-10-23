@@ -75,7 +75,7 @@ void MainWindow::on_pushBtn_loadGame_clicked()
 
                 //colour.setHsv(i*25+j*25,128,200);
                 brush.setColor(colour);
-                m_graphicsScene->addRect(i*50,j*50, 50,50,
+                m_graphicsScene->addRect(j*50,i*50, 50,50,
                                          outlinePen, brush); /*QBrush(Qt::white)*/
                             k++;
             }
