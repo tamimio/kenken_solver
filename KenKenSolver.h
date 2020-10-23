@@ -48,11 +48,9 @@ class KenKenSolver
     ~KenKenSolver(){}
 
     void readTask(QString _filename);          /* read task from text file */
-    //void drawField();                          /* draw field */
     void solveTask();                          /* solve task */
     std::vector<std::vector<int> > getField(); /* returns resulting matrix */
     int getSize();                             /* returns the size of the field */
-    /*std::vector <KenKenSection>*/
     std::pair<std::vector<QString>, std::vector<std::vector<int> > > getRules();
 };
 

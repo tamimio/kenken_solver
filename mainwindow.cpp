@@ -38,46 +38,36 @@ void MainWindow::on_pushBtn_loadGame_clicked()
     {
         KKSolver.readTask(filename);
 
-        delete prompt;
+        delete prompt; /* delete welcoming text */
 
         QPen outlinePen(Qt::black);
         outlinePen.setWidth(2);
         QBrush brush;
         brush.setStyle(Qt::SolidPattern);
         QColor colour;
-        colour.setHsv(210,128,200);
-        brush.setColor(colour);
 
+        /* - draw coloured field - */
         std::pair <std::vector<QString>, std::vector<std::vector<int> > > p;
-       p = KKSolver.getRules();
-       p.first;
-       p.second;
-       std::vector<int>::iterator it = std::find(p.second[0].begin(), p.second[0].end(), 3);
-       int index = std::distance(p.second[0].begin(), it);
-        /* draw blank field */
-       int k=0;
+        p = KKSolver.getRules();
+        int k=0; /* number of element == (i*KKSolver.getSize()+j) */
         for (int i=0; i<KKSolver.getSize(); ++i)
             for (int j=0; j<KKSolver.getSize(); ++j)
             {
-
-                for(int z=0; i<p.second.size(); ++z)
+                /* find in which rule this element is presented */
+                for(int z=0; i<p.second.size(); ++z) /* go thru all rules */
                 {
                     if (std::find(p.second[z].begin(), p.second[z].end(), k)
-                            !=p.second[z].end())
+                            !=p.second[z].end()) /* if founded */
                     {
-                        // z -number of rule
+                        // z - number of the determined rule
                         colour.setHsv(z*((int)255/p.first.size()),128,200);
                         break;
                     }
-
                 }
-
-
-                //colour.setHsv(i*25+j*25,128,200);
-                brush.setColor(colour);
-                m_graphicsScene->addRect(j*50,i*50, 50,50,
-                                         outlinePen, brush); /*QBrush(Qt::white)*/
-                            k++;
+                /* draw piece of the field */
+                brush.setColor(colour); /* color in the needed color */
+                m_graphicsScene->addRect(j*50,i*50, 50,50,outlinePen, brush);
+                k++; /* go to the next element */
             }
     }
     catch(/*std::pair<int,int>*/int pos)

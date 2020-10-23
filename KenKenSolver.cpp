@@ -250,20 +250,8 @@ std::vector<std::vector<int> > KenKenSolver::getField()
 int KenKenSolver::getSize()
 { return fieldSize; }
 
-//std::vector <KenKenSection> KenKenSolver::getRules()
 std::pair<std::vector<QString>, std::vector<std::vector<int> > > KenKenSolver::getRules()
 {
-//    std::map<char,int> rules;
-//    for (int i=0; i<sections.size(); ++i)
-//    {
-//        for (int j=0; j<sections[i].ind_i.size(); ++j)
-//        {
-//            char a = i+'0';
-//            //rules[&a] = sections[i].ind_i[j]*fieldSize+sections[i].ind_j[j];
-//            rules.insert(std::pair<char,int>(a,
-//                          sections[i].ind_i[j]+fieldSize*sections[i].ind_j[j]));
-//        }
-//    }
 
     std::vector<QString> rules;
     std::vector<std::vector<int> > elements;
@@ -285,5 +273,4 @@ std::pair<std::vector<QString>, std::vector<std::vector<int> > > KenKenSolver::g
     int u=0;
     return std::make_pair<std::vector<QString>, std::vector<std::vector<int> > >
             (rules, elements);
-    //return sections;
 }
