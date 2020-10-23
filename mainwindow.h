@@ -23,7 +23,6 @@ public:
 
     KenKenSolver KKSolver;
     QGraphicsScene * m_graphicsScene;
-    QGraphicsRectItem *rects;
     QGraphicsTextItem * prompt;
 
 private slots:

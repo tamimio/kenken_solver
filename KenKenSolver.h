@@ -20,8 +20,9 @@ class KenKenSection
     // bool isFull();
     // bool isValid();
  public:
-    //template <size_t N, size_t M>
-    bool checkRule(std::vector<std::vector<int> > & matrix);//(int (&matrix)[N][M]);
+    KenKenSection();
+    ~KenKenSection(){}
+    bool checkRule(std::vector<std::vector<int> > & matrix); /* checks if rule is true */
 
     friend class KenKenSolver;
 };
@@ -47,10 +48,12 @@ class KenKenSolver
     ~KenKenSolver(){}
 
     void readTask(QString _filename);          /* read task from text file */
-    void drawField();                          /* draw field */
+    //void drawField();                          /* draw field */
     void solveTask();                          /* solve task */
     std::vector<std::vector<int> > getField(); /* returns resulting matrix */
     int getSize();                             /* returns the size of the field */
+    /*std::vector <KenKenSection>*/
+    std::pair<std::vector<QString>, std::vector<std::vector<int> > > getRules();
 };
 
 #endif // KENKENSOLVER_H

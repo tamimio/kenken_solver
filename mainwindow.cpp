@@ -22,32 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setScene(m_graphicsScene);
 
     prompt = m_graphicsScene->addText("Загрузите задание", QFont("Arial", 10) );
-
-//    rects[0] = m_graphicsScene->addRect(0,0, 50,50, outlinePen, whiteBrush);
-//    rects[1] = m_graphicsScene->addRect(0,50, 50,50, outlinePen, whiteBrush);
-//    rects[2] = m_graphicsScene->addRect(0,100, 50,50, outlinePen, whiteBrush);
-
-//    rects[3] = m_graphicsScene->addRect(50,0, 50,50, outlinePen, whiteBrush);
-//    rects[4] = m_graphicsScene->addRect(50,50, 50,50, outlinePen, whiteBrush);
-//    rects[5] = m_graphicsScene->addRect(50,100, 50,50, outlinePen, whiteBrush);
-
-//    rects[6] = m_graphicsScene->addRect(100,0, 50,50, outlinePen, whiteBrush);
-//    rects[7] = m_graphicsScene->addRect(100,50, 50,50, outlinePen, whiteBrush);
-//    rects[8] = m_graphicsScene->addRect(100,100, 50,50, outlinePen, whiteBrush);
-
-
-
-//    text[0] = m_graphicsScene->addText("3", QFont("Arial", 20) );
-//    text[0]->setPos(0+14,0+4);
-//    text[1] = m_graphicsScene->addText("3", QFont("Arial", 20) );
-//    text[1]->setPos(0+14,50+4);
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    //delete[] rects;
 }
 void MainWindow::on_pushBtn_loadGame_clicked()
 {
@@ -61,16 +40,45 @@ void MainWindow::on_pushBtn_loadGame_clicked()
 
         delete prompt;
 
-        QBrush blueBrush(Qt::blue);
-        QBrush greenBrush(Qt::green);
-        QBrush whiteBrush(Qt::white);
         QPen outlinePen(Qt::black);
         outlinePen.setWidth(2);
+        QBrush brush;
+        brush.setStyle(Qt::SolidPattern);
+        QColor colour;
+        colour.setHsv(210,128,200);
+        brush.setColor(colour);
 
+        std::pair <std::vector<QString>, std::vector<std::vector<int> > > p;
+       p = KKSolver.getRules();
+       p.first;
+       p.second;
+       std::vector<int>::iterator it = std::find(p.second[0].begin(), p.second[0].end(), 3);
+       int index = std::distance(p.second[0].begin(), it);
         /* draw blank field */
+       int k=0;
         for (int i=0; i<KKSolver.getSize(); ++i)
             for (int j=0; j<KKSolver.getSize(); ++j)
-                m_graphicsScene->addRect(i*50,j*50, 50,50, outlinePen, whiteBrush);
+            {
+
+                for(int z=0; i<p.second.size(); ++z)
+                {
+                    if (std::find(p.second[z].begin(), p.second[z].end(), k)
+                            !=p.second[z].end())
+                    {
+                        // z -number of rule
+                        colour.setHsv(z*((int)255/p.first.size()),128,200);
+                        break;
+                    }
+
+                }
+
+
+                //colour.setHsv(i*25+j*25,128,200);
+                brush.setColor(colour);
+                m_graphicsScene->addRect(i*50,j*50, 50,50,
+                                         outlinePen, brush); /*QBrush(Qt::white)*/
+                            k++;
+            }
     }
     catch(/*std::pair<int,int>*/int pos)
     {
@@ -103,6 +111,7 @@ void MainWindow::on_pushBtn_solveGame_clicked()
                         ->setPos(50*i+14,j*50+4);
             }
         }
+
     }
     catch (...)
     {

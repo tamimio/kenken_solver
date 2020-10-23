@@ -1,19 +1,25 @@
 #include "KenKenSolver.h"
 
-#include <algorithm>
-
 #include "QDebug"       // tmp
 #include "QFile"        // open file
 #include "QMessageBox"  // error-window
 
 #include <cmath> // abs(), max(), min()
+#include <algorithm>
+
+#include <sstream>
 
 
+/* --------------------------------------------------------------------------- *
+ * ------------------------------ KenKen Sections ------------------------------
+ * -------------------------------------------------------------------------- */
 
+/* -------------------------------------------------------------- constructor */
+KenKenSection::KenKenSection()
+{ res=0; }
 
-
-//template <size_t N, size_t M>
-bool KenKenSection::checkRule(std::vector<std::vector<int> > & matrix) //(int (&matrix)[N][M])
+/* ---------------------------------------------------------------- checkRule */
+bool KenKenSection::checkRule(std::vector<std::vector<int> > & matrix)
 {
     int r;                       /* intermidiate results */
     int elem_num = ind_i.size(); /* number of elemets to compute */
@@ -54,30 +60,28 @@ bool KenKenSection::checkRule(std::vector<std::vector<int> > & matrix) //(int (&
 }
 
 
+/* --------------------------------------------------------------------------- *
+ * ------------------------------- KenKen Solver -------------------------------
+ * -------------------------------------------------------------------------- */
 
-
-
+/* -------------------------------------------------------------- constructor */
 KenKenSolver::KenKenSolver()
-{
-    flagTaskLoaded=0;
-}
+{ flagTaskLoaded=0; }
 
+/* ----------------------------------------------------------------- readTask */
 void KenKenSolver::readTask(QString _filename)
 {
-    qDebug()<<"parseTask start\n";
-
+    /* open file with task */
     QFile input_file(_filename);
-
     if (!input_file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
+    /* read each line of the file */
     int i=0;
     while (!input_file.atEnd())
     {
         QString line = input_file.readLine();
-        qDebug()<<line;
-        sections.push_back(KenKenSection());
-        sections[i].res=0;
+        sections.push_back(KenKenSection()); /* 1 line = +1 section */
         try
         {
             parseLine(&line, &sections[i]);
@@ -86,26 +90,19 @@ void KenKenSolver::readTask(QString _filename)
         {
             sections.clear();
             flagTaskLoaded=0;
-            throw i+1;
-            //throw std::make_pair(i, err_position);
-            break; //////////
+            throw i+1; //throw std::make_pair(i, err_position);
         }
         i++;
-    }
-
+    } /* while */
 
     fieldSize = determSize();
     flagTaskLoaded=1;
-    qDebug()<<"parseTask end\n";
 }
 
-
-
-
+/* ---------------------------------------------------------------- parseLine */
 void KenKenSolver::parseLine(QString * line, KenKenSection * section)
 {
-    enum {init, ind, res_op, err, fin}
-         state;
+    enum {init, ind, res_op, err, fin} state;
     state=init;
 
     int j=0; /* iterate through line */
@@ -117,7 +114,7 @@ void KenKenSolver::parseLine(QString * line, KenKenSection * section)
             case init:
                 state = ind;
 
-            case ind:
+            case ind:                            /* INDICES */
                 int tmp1,tmp2;
                 qDebug()<<line->mid(j,3).toLatin1();
                 sscanf(line->mid(j,3).toLatin1(), "%d,%d", &tmp1, &tmp2);
@@ -140,16 +137,11 @@ void KenKenSolver::parseLine(QString * line, KenKenSection * section)
                 }
                 break;
 
-            case res_op:
+            case res_op:                   /* OPERATION and RESULT */
                 while (line->at(j).toLatin1()==' ') j++;
                 qDebug()<<line->mid(j).toLatin1();
                 sscanf(line->mid(j).toLatin1(), "%d%c", &section->res, &section->oper);
-
-                //if ((section->res>=1 && section->res<=9)==0)
-                //    state = err;
-                //else
-                    state = fin;
-
+                state = fin;
                 break;
 
             case err:
@@ -162,8 +154,7 @@ void KenKenSolver::parseLine(QString * line, KenKenSection * section)
 }
 
 
-
-
+/* --------------------------------------------------------------- determSize */
 int KenKenSolver::determSize()
 {
     int max_ind = 1;
@@ -179,8 +170,9 @@ int KenKenSolver::determSize()
     return max_ind+1;
 }
 
-void KenKenSolver::drawField()
-{qDebug()<<"drawField\n";}
+
+/*void KenKenSolver::drawField()
+{qDebug()<<"drawField\n";}*/
 
 // random generator function:
 int myrandom (int i) { return std::rand()%i;}
@@ -188,11 +180,12 @@ int myrandom (int i) { return std::rand()%i;}
 
 void KenKenSolver::fillField()
 {
-    /*static*/ std::vector<int> one_row; /* row for for the the matrix */
+    std::vector<int> one_row; /* row for for the the matrix */
     for (int i=1; i<fieldSize+1; ++i)
         one_row.push_back(i);
-std::random_shuffle(one_row.begin(),one_row.end(),myrandom);
+    std::random_shuffle(one_row.begin(),one_row.end(),myrandom);
     Field.push_back(one_row);
+
     for(int i=1; i<fieldSize; ++i)
     {
          bool unique;
@@ -219,6 +212,7 @@ std::random_shuffle(one_row.begin(),one_row.end(),myrandom);
     }
 }
 
+/* ---------------------------------------------------------------- solveTask */
 void KenKenSolver::solveTask()
 {
     if (flagTaskLoaded)
@@ -242,7 +236,6 @@ void KenKenSolver::solveTask()
                 }
             }
         }
-        int u=0;
     }
     else
     {
@@ -250,10 +243,47 @@ void KenKenSolver::solveTask()
     }
 }
 
-
-
+/* --------------------------------------------------------------------- GETs */
 std::vector<std::vector<int> > KenKenSolver::getField()
 { return Field; }
 
 int KenKenSolver::getSize()
 { return fieldSize; }
+
+//std::vector <KenKenSection> KenKenSolver::getRules()
+std::pair<std::vector<QString>, std::vector<std::vector<int> > > KenKenSolver::getRules()
+{
+//    std::map<char,int> rules;
+//    for (int i=0; i<sections.size(); ++i)
+//    {
+//        for (int j=0; j<sections[i].ind_i.size(); ++j)
+//        {
+//            char a = i+'0';
+//            //rules[&a] = sections[i].ind_i[j]*fieldSize+sections[i].ind_j[j];
+//            rules.insert(std::pair<char,int>(a,
+//                          sections[i].ind_i[j]+fieldSize*sections[i].ind_j[j]));
+//        }
+//    }
+
+    std::vector<QString> rules;
+    std::vector<std::vector<int> > elements;
+    int k = sections.size(); //!
+    for(int i=0; i<sections.size(); ++i)
+    {
+
+        QString qstr;
+        qstr.sprintf("%d%c", sections[i].res, sections[i].oper);
+        rules.push_back(qstr);
+
+        std::vector<int> s;
+        for(int j=0; j<sections[i].ind_i.size(); ++j)
+            s.push_back(sections[i].ind_i[j]*fieldSize+sections[i].ind_j[j]);
+        elements.push_back(s);
+    }
+
+
+    int u=0;
+    return std::make_pair<std::vector<QString>, std::vector<std::vector<int> > >
+            (rules, elements);
+    //return sections;
+}

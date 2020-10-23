@@ -13,7 +13,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DUNICODE -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -pipe -fno-keep-inline-dllexport -O2 -Wall -Wextra $(DEFINES)
-CXXFLAGS      = -pipe -fno-keep-inline-dllexport -O2 -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
+CXXFLAGS      = -pipe -fno-keep-inline-dllexport -D_GLIBCXX_DEBUG -O2 -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
 INCPATH       = -I. -I"C:\Qt\Qt5.2.1\5.2.1\mingw48_32\include" -I"C:\Qt\Qt5.2.1\5.2.1\mingw48_32\include\QtWidgets" -I"C:\Qt\Qt5.2.1\5.2.1\mingw48_32\include\QtGui" -I"C:\Qt\Qt5.2.1\5.2.1\mingw48_32\include\QtCore" -I"release" -I"." -I"C:\Qt\Qt5.2.1\5.2.1\mingw48_32\mkspecs\win32-g++"
 LINKER      =        g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
@@ -219,11 +219,9 @@ release/moc_mainwindow.cpp: C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMa
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
 		KenKenSolver.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QFile \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMessageBox \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qmessagebox.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QString \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QGraphicsTextItem \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qgraphicsitem.h \
 		mainwindow.h
 	C:\Qt\Qt5.2.1\5.2.1\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) mainwindow.h -o release\moc_mainwindow.cpp
 
@@ -360,11 +358,9 @@ release/main.o: main.cpp mainwindow.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
 		KenKenSolver.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QFile \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMessageBox \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qmessagebox.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QString \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QGraphicsTextItem \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qapplication.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreapplication.h \
@@ -487,11 +483,9 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtGui/qicon.h \
 		KenKenSolver.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QFile \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMessageBox \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qmessagebox.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QString \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QGraphicsTextItem \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qgraphicsitem.h \
 		ui_mainwindow.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QVariant \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QAction \
@@ -506,11 +500,18 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtGui/qinputmethod.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QButtonGroup \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qbuttongroup.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QGraphicsView \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qgraphicsview.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtGui/qpainter.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtGui/qtextoption.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtGui/qpen.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qscrollarea.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qgraphicsscene.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QHeaderView \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qheaderview.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qframe.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qabstractitemmodel.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qitemselectionmodel.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qabstractitemdelegate.h \
@@ -537,13 +538,17 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QFileDialog \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qfiledialog.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qdir.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qfileinfo.h
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qfileinfo.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/qmessagebox.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtWidgets/QGraphicsScene
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o mainwindow.cpp
 
 release/KenKenSolver.o: KenKenSolver.cpp KenKenSolver.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QString \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qglobal.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qconfig.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qfeatures.h \
@@ -580,23 +585,24 @@ release/KenKenSolver.o: KenKenSolver.cpp KenKenSolver.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qtypeinfo.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qtypetraits.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/QDebug \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qalgorithms.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qhash.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qchar.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qiterator.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qlist.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qrefcount.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qpair.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qmap.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qtextstream.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qiodevice.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qobject.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qnamespace.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qobjectdefs_impl.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qstring.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qbytearray.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qarraydata.h \
-		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qstringbuilder.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qcoreevent.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qscopedpointer.h \
 		C:/Qt/Qt5.2.1/5.2.1/mingw48_32/include/QtCore/qmetatype.h \
