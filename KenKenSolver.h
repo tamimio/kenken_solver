@@ -30,17 +30,19 @@ class KenKenSection
 /* --------------------------------------------------------------------------- *
  * ------------------------------- KenKen Solver -------------------------------
  * Contains sections of rules.
- * Can read task from file, draw field of this task, and solve it.
+ * Can read task from file and solve it.
  * -------------------------------------------------------------------------- */
 class KenKenSolver
 {
     bool flagTaskLoaded;                  /* is task loaded */
     int fieldSize;                        /* size of the filed */
-    std::vector <KenKenSection> sections; /* sections with rules */
+    //std::vector <KenKenSection> sections;
+    KenKenSection sections[16];           /* sections with rules */
+    int numSect;                          /* number of sections */
     std::vector<std::vector<int> > Field; /* matrix with resulting numbers */
 
     void parseLine(QString * line, KenKenSection * section); /* parse line with rule*/
-    int determSize();                     /* determine the size of the field */
+    int determSize();           /* determine the size of the field */
     void fillField();           /* random filling of the resulting matrix */
 
  public:

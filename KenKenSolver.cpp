@@ -60,7 +60,10 @@ bool KenKenSection::checkRule(std::vector<std::vector<int> > & matrix)
 
 /* -------------------------------------------------------------- constructor */
 KenKenSolver::KenKenSolver()
-{ flagTaskLoaded=0; }
+{
+    flagTaskLoaded=0;
+    numSect=0;
+}
 
 /* ----------------------------------------------------------------- readTask */
 void KenKenSolver::readTask(QString _filename)
@@ -75,19 +78,23 @@ void KenKenSolver::readTask(QString _filename)
     while (!input_file.atEnd())
     {
         QString line = input_file.readLine();
-        sections.push_back(KenKenSection()); /* 1 line = +1 section */
+        //sections.push_back(KenKenSection()); /* 1 line = +1 section */
         try
         {
             parseLine(&line, &sections[line_num]);
+            //sections.push_back(s);
         }
         catch (int err_position)
         {
-            sections.clear();
+            //sections.clear();
             flagTaskLoaded=0;
             throw std::make_pair<int,int>(line_num+1, err_position+1);
         }
         line_num++;
+        if (line_num>15)
+            throw 1;
     } /* while */
+    numSect = line_num;
 
     fieldSize = determSize();
     flagTaskLoaded=1;
@@ -152,7 +159,7 @@ void KenKenSolver::parseLine(QString * line, KenKenSection * section)
 int KenKenSolver::determSize()
 {
     int max_ind = 1;
-    for (int i=0; i<sections.size(); ++i)
+    for (int i=0; i<numSect; ++i)//for (int i=0; i<sections.size(); ++i)
     {
         max_ind = std::max( max_ind, static_cast<int>(
                     * std::max_element(sections[i].ind_i.begin(), sections[i].ind_i.end()))
@@ -217,7 +224,7 @@ void KenKenSolver::solveTask()
             fillField();
 
             /* - check all rules - */
-            for(int i=0; i<sections.size(); ++i)
+            for(int i=0; i<numSect; ++i)//for(int i=0; i<sections.size(); ++i)
             {
                 if(!sections[i].checkRule(Field))
                 {
@@ -244,8 +251,8 @@ std::pair<std::vector<QString>, std::vector<std::vector<int> > > KenKenSolver::g
 {
     std::vector<QString> rules;
     std::vector<std::vector<int> > elements;
-    int k = sections.size(); //!
-    for(int i=0; i<sections.size(); ++i)
+    int k=numSect;//int k = sections.size(); //!
+    for(int i=0; i<numSect; ++i)//for(int i=0; i<sections.size(); ++i)
     {
 
         QString qstr;
@@ -258,8 +265,6 @@ std::pair<std::vector<QString>, std::vector<std::vector<int> > > KenKenSolver::g
         elements.push_back(s);
     }
 
-
-    int u=0;
     return std::make_pair<std::vector<QString>, std::vector<std::vector<int> > >
             (rules, elements);
 }

@@ -36,8 +36,12 @@ void MainWindow::on_pushBtn_loadGame_clicked()
     {
         KKSolver->readTask(filename);
         //delete prompt; /* delete welcoming text */
+
+        m_graphicsScene->clear();
+        m_graphicsScene->update();
+        drawField();
     }
-    catch(std::pair<int,int> err)//int pos)
+    catch(std::pair<int,int> err)
     {
         delete KKSolver;
 
@@ -48,10 +52,14 @@ void MainWindow::on_pushBtn_loadGame_clicked()
         messageBox.critical(0,"Ошибка",&str[0]);
         messageBox.setFixedSize(500,200);
     }
+    catch (int)
+    {
+        delete KKSolver;
 
-    m_graphicsScene->clear();
-    m_graphicsScene->update();
-    drawField();
+        QMessageBox messageBox;
+        messageBox.critical(0,"Ошибка","Превышено число правил");
+        messageBox.setFixedSize(500,200);
+    }
 }
 
 /* ------------------------------------------------------------- SOLVE button */
@@ -60,6 +68,8 @@ void MainWindow::on_pushBtn_solveGame_clicked()
     try
     {
         KKSolver->solveTask();
+        std::vector<std::vector<int> > matr = KKSolver->getField();
+        fillField(matr);
     }
     catch (...)
     {
@@ -68,8 +78,6 @@ void MainWindow::on_pushBtn_solveGame_clicked()
         messageBox.setFixedSize(500,200);
     }
 
-    std::vector<std::vector<int> > matr = KKSolver->getField();
-    fillField(matr);
     delete KKSolver;
 }
 

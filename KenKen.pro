@@ -9,6 +9,7 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QMAKE_CXXFLAGS += -D_GLIBCXX_DEBUG
+#CONFIG += c++11
 
 TARGET = KenKen
 TEMPLATE = app
