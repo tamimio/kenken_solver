@@ -69,6 +69,14 @@ void MainWindow::on_pushBtn_loadGame_clicked()
                 m_graphicsScene->addRect(j*50,i*50, 50,50,outlinePen, brush);
                 k++; /* go to the next element */
             }
+        for(int i=0; i<p.first.size(); ++i)
+        {
+            int jj = p.second[i][0] / KKSolver.getSize();
+            int ii = p.second[i][0] - KKSolver.getSize()*jj;
+            int u=0;
+            m_graphicsScene->addText(p.first[i], QFont("Arial", 8))
+                    ->setPos(50*ii+3,jj*50);
+        }
     }
     catch(/*std::pair<int,int>*/int pos)
     {
