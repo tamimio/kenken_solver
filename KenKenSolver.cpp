@@ -2,13 +2,7 @@
 
 #include "QDebug"       // tmp
 #include "QFile"        // open file
-#include "QMessageBox"  // error-window
-
-#include <cmath> // abs(), max(), min()
-#include <algorithm>
-
-#include <sstream>
-
+#include <cmath>        // abs(), max(), min()
 
 /* --------------------------------------------------------------------------- *
  * ------------------------------ KenKen Sections ------------------------------
@@ -77,22 +71,22 @@ void KenKenSolver::readTask(QString _filename)
         return;
 
     /* read each line of the file */
-    int i=0;
+    int line_num=0;
     while (!input_file.atEnd())
     {
         QString line = input_file.readLine();
         sections.push_back(KenKenSection()); /* 1 line = +1 section */
         try
         {
-            parseLine(&line, &sections[i]);
+            parseLine(&line, &sections[line_num]);
         }
         catch (int err_position)
         {
             sections.clear();
             flagTaskLoaded=0;
-            throw i+1; //throw std::make_pair(i, err_position);
+            throw std::make_pair<int,int>(line_num+1, err_position+1);
         }
-        i++;
+        line_num++;
     } /* while */
 
     fieldSize = determSize();
@@ -116,6 +110,7 @@ void KenKenSolver::parseLine(QString * line, KenKenSection * section)
 
             case ind:                            /* INDICES */
                 int tmp1,tmp2;
+                while (line->at(j).toLatin1()==' ') j++;
                 qDebug()<<line->mid(j,3).toLatin1();
                 sscanf(line->mid(j,3).toLatin1(), "%d,%d", &tmp1, &tmp2);
                 if (((tmp1>=1 && tmp1<=9)&&(tmp2>=1 && tmp2<=9))==0)
@@ -145,14 +140,13 @@ void KenKenSolver::parseLine(QString * line, KenKenSection * section)
                 break;
 
             case err:
-                throw 1;
+                throw j;
 
             case fin: break;
         } // switch
         j++; /* move to the next symbol */
     } // while
 }
-
 
 /* --------------------------------------------------------------- determSize */
 int KenKenSolver::determSize()
@@ -170,13 +164,9 @@ int KenKenSolver::determSize()
     return max_ind+1;
 }
 
-
-/*void KenKenSolver::drawField()
-{qDebug()<<"drawField\n";}*/
-
+/* ---------------------------------------------------------------- fillField */
 // random generator function:
 int myrandom (int i) { return std::rand()%i;}
-
 
 void KenKenSolver::fillField()
 {
@@ -252,7 +242,6 @@ int KenKenSolver::getSize()
 
 std::pair<std::vector<QString>, std::vector<std::vector<int> > > KenKenSolver::getRules()
 {
-
     std::vector<QString> rules;
     std::vector<std::vector<int> > elements;
     int k = sections.size(); //!
