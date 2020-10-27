@@ -32,12 +32,14 @@ class KenKenSection
  * Contains sections of rules.
  * Can read task from file and solve it.
  * -------------------------------------------------------------------------- */
+#define MAX_SECTIONS 16
+#define MAX_ATTEMPTS 5000
 class KenKenSolver
 {
     bool flagTaskLoaded;                  /* is task loaded */
     int fieldSize;                        /* size of the filed */
     //std::vector <KenKenSection> sections;
-    KenKenSection sections[16];           /* sections with rules */
+    KenKenSection sections[MAX_SECTIONS]; /* sections with rules */
     int numSect;                          /* number of sections */
     std::vector<std::vector<int> > Field; /* matrix with resulting numbers */
 

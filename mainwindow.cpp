@@ -71,10 +71,16 @@ void MainWindow::on_pushBtn_solveGame_clicked()
         std::vector<std::vector<int> > matr = KKSolver->getField();
         fillField(matr);
     }
-    catch (...)
+    catch (int err)
     {
         QMessageBox messageBox;
-        messageBox.critical(0,"Ошибка","Сперва загрузите задание!");
+        QString str;
+        switch (err)
+        {
+            case 1: str = "Сперва загрузите задание!"; break;
+            case 2: str = "Решений не найдено."; break;
+        }
+        messageBox.critical(0,"Ошибка",str);
         messageBox.setFixedSize(500,200);
     }
 

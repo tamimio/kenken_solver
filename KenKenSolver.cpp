@@ -91,7 +91,7 @@ void KenKenSolver::readTask(QString _filename)
             throw std::make_pair<int,int>(line_num+1, err_position+1);
         }
         line_num++;
-        if (line_num>15)
+        if (line_num>=MAX_SECTIONS)
             throw 1;
     } /* while */
     numSect = line_num;
@@ -215,8 +215,12 @@ void KenKenSolver::solveTask()
     if (flagTaskLoaded)
     {
         bool task_solved = 0; /* условие продолжения перебора */
+        int tries=0;
         while(!task_solved)
         {
+            tries++;
+            if (tries>MAX_ATTEMPTS)
+                throw 2;
             task_solved = 1;
 
             /* - create new matrix - */
@@ -233,6 +237,7 @@ void KenKenSolver::solveTask()
                 }
             }
         }
+        qDebug()<<tries;
     }
     else
     {
